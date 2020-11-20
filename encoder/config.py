@@ -12,7 +12,7 @@ librispeech_datasets = {
         "other": ["LibriSpeech/dev-other"]
     },
 }
-zalo = {
+zalo_data = {
     "train": ["zalo/dataset"],
     "test": ["zalo/public-test"],
 }
