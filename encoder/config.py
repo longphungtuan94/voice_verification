@@ -1,6 +1,6 @@
 librispeech_datasets = {
     "train": {
-        "clean": ["LibriSpeech/train-zalo-challenge"],
+        "clean": ["LibriSpeech/train-clean-100", "LibriSpeech/train-clean-360"],
         "other": ["LibriSpeech/train-other-500"]
     },
     "test": {
@@ -11,6 +11,10 @@ librispeech_datasets = {
         "clean": ["LibriSpeech/dev-clean"],
         "other": ["LibriSpeech/dev-other"]
     },
+}
+zalo = {
+    "train": ["zalo/dataset"],
+    "test": ["zalo/public-test"],
 }
 libritts_datasets = {
     "train": {
