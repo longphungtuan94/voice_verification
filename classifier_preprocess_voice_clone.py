@@ -19,6 +19,9 @@ def get_embed(fn, encoder):
     embed = encoder.embed_utterance(preprocessed_wav)
     return embed
 
+def load_model_voice_clone(model_dir):
+    encoder.load_model(Path(f'{model_dir}/pretrained.pt'))
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Preprocesses audio file for training purpose, extract feature by using pretrained model Real-Time-Voice-Cloning",
@@ -31,15 +34,14 @@ if __name__ == "__main__":
         "Data filename serialized by Pickle, default: 'train_data_voice_clone.pickle'")
     args = parser.parse_args()
 
-    encoder.load_model(Path(f'{args.models_dir_voice_clone}/pretrained.pt'))
+    # load model
+    load_model_voice_clone(args.models_dir_voice_clone)
+
+    # extract feature and save
     data = {}
     for path in tqdm(Path(args.train_dir).rglob('*.wav')):
         file = str(path)
-        path = file.split('/')
-        label = path[-2]
-        label_list[label].append(file)
-        if file not in data:
-            data[file] = get_embed(file, encoder)
+        data[file] = get_embed(file, encoder)
 
     with open(args.out_dir, 'wb') as handle:
         pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)

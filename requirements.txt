@@ -16,3 +16,5 @@ multiprocess
 numba==0.51.2
 webrtcvad
 torch==1.4.0
+flask
+flask-restful
