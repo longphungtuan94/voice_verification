@@ -1,3 +1,4 @@
+import tensorflow as tf
 from pathlib import Path
 from tqdm import tqdm
 from scipy.spatial import distance
@@ -11,6 +12,8 @@ import librosa
 import argparse
 import sys
 import os
+
+graph = None
 
 def load_wav(vid_path, sr, mode='train'):
     wav, sr_ret = sf.read(vid_path)
@@ -45,12 +48,14 @@ def load_data(path, win_length=400, sr=16000, hop_length=160, n_fft=512, spec_le
     #print("finished loading a datum", timelib.time() - t1)
     return (spec_mag - mu) / (std + 1e-5)
 
-def load_embed(path, vgg_model, params):
+def get_embed(path, vgg_model, params):
+    global graph
     specs = load_data(path, win_length=params['win_length'], sr=params['sampling_rate'],
                          hop_length=params['hop_length'], n_fft=params['nfft'],
                          spec_len=params['spec_len'], mode='eval')
     specs = np.expand_dims(np.expand_dims(specs, 0), -1)
-    v = vgg_model.predict(specs)
+    with graph.as_default():
+        v = vgg_model.predict(specs)
     return v[0]
 
 vgg_params = {'dim': (257, None, 1),
@@ -75,6 +80,8 @@ vgg_args = VGGArgs()
 
 def load_model_vgg(model_dir):
     global vgg_params
+    global graph
+    graph = tf.get_default_graph()
     vgg_model = vgg.vggvox_resnet2d_icassp(input_dim=vgg_params['dim'],
                                             num_class=vgg_params['n_classes'],
                                             mode='eval', args=vgg_args)
@@ -101,7 +108,7 @@ if __name__ == "__main__":
     data = {}
     for path in tqdm(Path(args.train_dir).rglob('*.wav')):
         file = str(path)
-        data[file] = load_embed(file, vgg_model, vgg_params)
+        data[file] = get_embed(file, vgg_model, vgg_params)
 
     with open(args.out_dir, 'wb') as handle:
         pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)

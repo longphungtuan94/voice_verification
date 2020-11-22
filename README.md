@@ -19,7 +19,7 @@ Run the following scripts to preprocess the datasets:
 - `python encoder_preprocess.py datasets_root -d voxceleb2`
 - `python encoder_preprocess.py datasets_root -d zalo`
 
-### Train
+### Train Voice Cloning encoder
 - `python encoder_train.py checkpoint_name datasets_root/SV2TTS/encoder/ --no_visdom`
 
 If you want to use visom, please start the visdom server first then run:
@@ -27,4 +27,26 @@ If you want to use visom, please start the visdom server first then run:
 
 Checkpoint is saved in `encoder/saved_models`
 
-### Inference
+## Preprocess data for training classifier
+Run the following scripts to preprocess the datasets using pretrained model:
+
+- `python classifier_preprocess_vgg.py `
+- `python classifier_preprocess_voice_clone.py `
+
+These commands will create 2 pickle file containing preprocessed data to train classifier model faster, default is `train_data_vgg.pickle` and `train_data_voice_clone.pickle`.
+
+## Train classifier
+After preprocessing data we need to train the classifier:
+
+> `python classifier_train.py `
+
+This will train and create the best checkpoint at `weights/classifier.h5`.
+
+### Testing
+You can run a sample by first creating the predict API with:
+
+> `python api.py`
+
+Then edit the path in `api_test.py` and run it to test the model:
+
+> `python api_test.py`
