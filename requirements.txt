@@ -1,10 +1,10 @@
 
-tensorflow==1.15
+tensorflow-gpu==1.14.0
+keras==2.2.5
 umap-learn
 visdom
 librosa==0.8.0
 matplotlib>=3.3.0
-numpy==1.19.3
 scipy==1.5.3
 tqdm
 sounddevice
@@ -18,3 +18,5 @@ webrtcvad
 torch==1.4.0
 flask
 flask-restful
+h5py==2.10.0
+numpy==1.19.3
