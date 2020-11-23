@@ -20,7 +20,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Build and train voice verification model with preprocessed data",
     )
-    parser.add_argument("-d", "--train_dir", type=Path, default="datasets_root/dataset/", help=\
+    parser.add_argument("-d", "--train_dir", type=Path, default="datasets_root/zalo/dataset/", help=\
         "Path to the directory containing your zalo training dataset (in which contains folders with label like '272-M-26', '632-M-27',...")
     parser.add_argument("-dvc", "--data_voice_clone", type=str, default="train_data_voice_clone.pickle", help=\
         "Path to data preprocessed and pickled by Real-Time-Voice-Cloning model")

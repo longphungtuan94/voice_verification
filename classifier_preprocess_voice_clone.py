@@ -26,7 +26,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Preprocesses audio file for training purpose, extract feature by using pretrained model Real-Time-Voice-Cloning",
     )
-    parser.add_argument("-d", "--train_dir", type=Path, default="datasets_root/dataset/", help=\
+    parser.add_argument("-d", "--train_dir", type=Path, default="datasets_root/zalo/dataset/", help=\
         "Path to the directory containing your zalo training dataset (in which contains folders with label like '272-M-26', '632-M-27',...")
     parser.add_argument("-mvc", "--models_dir_voice_clone", type=Path, default="encoder/saved_models/", help=\
         "Path to directory containing pretrained weights of Real-Time-Voice-Cloning model")
