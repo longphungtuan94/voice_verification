@@ -1,9 +1,11 @@
-import tensorflow as tf
+
+from keras.backend.tensorflow_backend import set_session
 from pathlib import Path
 from tqdm import tqdm
 from scipy.spatial import distance
 from model import vgg
 
+import tensorflow as tf
 import pickle
 import random
 import numpy as np
@@ -12,6 +14,12 @@ import librosa
 import argparse
 import sys
 import os
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
 
 graph = None
 

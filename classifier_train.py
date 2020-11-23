@@ -15,6 +15,13 @@ from keras.optimizers import Adam
 
 from model.network import build_model
 from model.generator import Generator
+from keras.backend.tensorflow_backend import set_session
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
