@@ -1,7 +1,7 @@
 # Zalo Voice Verification Challenge
 
 ## Encoder:
-The Encoder is a module of Corentin Jemine's awesome [Real-Time-Voice-Cloning](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository. Please visit his repository for more in depth information
+The Encoder is a module of Corentin Jemine's awesome [Real-Time-Voice-Cloning](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository. Please visit his repository for more in depth information.
 
 ### Preprocess data
 You will need one of the following datasets (ideally all):
@@ -19,15 +19,17 @@ Run the following scripts to preprocess the datasets:
 - `python encoder_preprocess.py datasets_root -d voxceleb2`
 - `python encoder_preprocess.py datasets_root -d zalo`
 
-### Train Voice Cloning encoder
+### Train encoder
 - `python encoder_train.py checkpoint_name datasets_root/SV2TTS/encoder/ --no_visdom`
 
-If you want to use visom, please start the visdom server first then run:
+If you want to use visdom:
+- Start visdom on a terminal with command `visdom` then run:
 - `python encoder_train.py checkpoint_name datasets_root/SV2TTS/encoder/`
 
 Checkpoint is saved in `encoder/saved_models`
 
-## Preprocess data for training classifier
+## Classifier
+### Preprocess data
 Run the following scripts to preprocess the datasets using pretrained model:
 
 - `python classifier_preprocess_vgg.py `
@@ -35,14 +37,14 @@ Run the following scripts to preprocess the datasets using pretrained model:
 
 These commands will create 2 pickle file containing preprocessed data to train classifier model faster, default is `train_data_vgg.pickle` and `train_data_voice_clone.pickle`.
 
-## Train classifier
+### Train classifier
 After preprocessing data we need to train the classifier:
 
 > `python classifier_train.py `
 
 This will train and create the best checkpoint at `weights/classifier.h5`.
 
-### Testing
+## Testing
 You can run a sample by first creating the predict API with:
 
 > `python api.py`
